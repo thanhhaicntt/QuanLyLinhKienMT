@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5">
+
+    <!-- Thanh tìm kiếm -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autofillHints=""
+            android:hint="@string/tim_kiem_sp"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:background="@null"
+            android:padding="12dp"
+            android:textSize="15sp"/>
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tim"
+            android:backgroundTint="#1565C0"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvResultCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:textSize="13sp"
+        android:textColor="#888888"
+        android:visibility="gone"
+        tools:ignore="RtlSymmetry" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvResults"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="6dp"/>
+
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/khong_tim_thay"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="#888888"
+        android:visibility="gone"/>
+
+</LinearLayout>

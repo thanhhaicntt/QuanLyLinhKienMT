@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+<!--        <ImageView-->
+<!--            android:id="@+id/imgProduct"-->
+<!--        them nhieu hinh anh-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="#E0E0E0">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vpProductImages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tvImageIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="10dp"
+                android:background="#66000000"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="1/1"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+        </FrameLayout>
+
+
+        <!-- Thông tin sản phẩm -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:padding="16dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvProductName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#212121"/>
+
+            <TextView
+                android:id="@+id/tvProductPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="#E53935"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="#888888"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/tvStock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="#388E3C"
+                android:layout_marginTop="4dp"/>
+            <!-- Thông số kỹ thuật -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="6dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_product"
+                    android:layout_marginEnd="6dp"/>
+
+                <TextView
+                    android:id="@+id/tvSpecification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="#1565C0"
+                    android:textStyle="italic"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Mô tả -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:padding="16dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/MO_TA"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:lineSpacingMultiplier="1.4"
+                android:textColor="#424242"/>
+
+        </LinearLayout>
+
+        <!-- Chọn số lượng + thêm giỏ hàng -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:padding="16dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/so_luong"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <Button
+                    android:id="@+id/btnMinus"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="-"
+                    android:textSize="18sp"
+                    android:padding="0dp"/>
+
+                <TextView
+                    android:id="@+id/tvQuantity"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textSize="16sp"
+                    android:textAlignment="center"
+                    android:gravity="center"/>
+
+                <Button
+                    android:id="@+id/btnPlus"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="+"
+                    android:textSize="18sp"
+                    android:padding="0dp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnAddToCart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/them_gio_hang"
+                android:backgroundTint="#1565C0"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="12dp"/>
+
+        </LinearLayout>
+
+        <!-- Rating trung bình -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:padding="16dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/danh_gia"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <RatingBar
+                android:id="@+id/ratingBarAvg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                style="?android:attr/ratingBarStyleSmall"
+                android:numStars="5"
+                android:stepSize="0.5"/>
+
+            <TextView
+                android:id="@+id/tvRatingCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/chua_danh_gia"
+                android:textSize="13sp"
+                android:textColor="#888888"
+                android:layout_marginTop="4dp"/>
+
+            <Button
+                android:id="@+id/btnWriteReview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/viet_danh_gia"
+                android:backgroundTint="#FF6F00"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tvReviewListTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đánh giá từ người dùng"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#212121"
+                android:layout_marginTop="12dp"/>
+
+            <TextView
+                android:id="@+id/tvReviewList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chưa có đánh giá nào"
+                android:textSize="13sp"
+                android:textColor="#424242"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="6dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
