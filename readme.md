@@ -45,3 +45,10 @@ Những điểm quan trọng cần nắm
    JOIN products p ON oi.product_id = p.id
    WHERE p.category_id = ?
 -  (Một đơn hàng có thể chứa nhiều sản phẩm cùng danh mục → nếu không có DISTINCT thì đơn đó sẽ bị lặp lại nhiều lần trong kết quả)
+
+Thêm chức năng và fix lỗi
+- lưu giỏ hàng theo từ user(không mất khi xóa app)
+- fix lỗi xóa item trong CartAdapter bị trùng 2 dòng code xóa
+-Thêm phần xem đánh giá người dùng
+- Chức năng thanh toán đơn hàng đổi đặt hàng thành thanh toán và thanh toán bằng momo Demo thêm luồng “thanh toán online giả lập qua web + callback deep link” thêm OnlinePaymentService.java 
+-Thêm nhiều hình ảnh vào và chỉ lấy ảnh đầu tiên (home, search, admin, giỏ hàng)
