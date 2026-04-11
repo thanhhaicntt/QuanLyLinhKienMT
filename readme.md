@@ -52,3 +52,5 @@ Thêm chức năng và fix lỗi
 -Thêm phần xem đánh giá người dùng
 - Chức năng thanh toán đơn hàng đổi đặt hàng thành thanh toán và thanh toán bằng momo Demo thêm luồng “thanh toán online giả lập qua web + callback deep link” thêm OnlinePaymentService.java 
 -Thêm nhiều hình ảnh vào và chỉ lấy ảnh đầu tiên (home, search, admin, giỏ hàng)
+- thêm phương thức thanh toán bằng qr
+- upload sẳn ảnh mặt định khi thêm linh kiện

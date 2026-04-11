@@ -192,8 +192,12 @@ public class AdminProductActivity extends AppCompatActivity {
                             refreshList();
                         }
                     } else {
+                        // Mặc định 2 ảnh nếu không nhập
+                        String defaultImages = "https://cdn.phototourl.com/member/2026-04-11-ae2c6c59-d134-41ae-a490-2c80a94d2ce9.jpg,https://cdn.phototourl.com/member/2026-04-11-95688c21-edb3-4f79-9ece-b17aa38a12d8.jpg";
+                        String finalImgUrl = (imgUrl.isEmpty()) ? defaultImages : imgUrl;
+
                         Product newProduct = new Product(
-                                categoryId, name, desc, priceVal, stockVal, imgUrl);
+                                categoryId, name, desc, priceVal, stockVal, finalImgUrl);
                         newProduct.setSpecification(spec);
                         long result = productDAO.insert(newProduct);
                         if (result != -1) {

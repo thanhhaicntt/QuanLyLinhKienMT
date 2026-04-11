@@ -1,13 +1,17 @@
 package com.dqk.myapp.activity.user;
 
-import android.app.AlertDialog;
+
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +24,7 @@ import com.dqk.myapp.database.ProductDAO;
 import com.dqk.myapp.model.Product;
 import com.dqk.myapp.model.Order;
 import com.dqk.myapp.model.OrderItem;
-import com.dqk.myapp.service.OnlinePaymentService;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.dqk.myapp.utils.CartManager;
 import com.dqk.myapp.utils.SessionManager;
 
@@ -38,7 +42,12 @@ public class CartActivity extends AppCompatActivity {
     private OrderDAO orderDAO;
     private ProductDAO productDAO;
     private SessionManager session;
-    private OnlinePaymentService onlinePaymentService;
+    private final ActivityResultLauncher<Intent> paymentLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    placeOrderAfterPaymentSuccess();
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +62,7 @@ public class CartActivity extends AppCompatActivity {
         orderDAO   = new OrderDAO(DatabaseHelper.getInstance(this));
         productDAO = new ProductDAO(DatabaseHelper.getInstance(this));
         session    = new SessionManager(this);
-        onlinePaymentService = new OnlinePaymentService();
+
         CartManager.getInstance().init(this, session.getUserId());
 
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
@@ -100,39 +109,56 @@ public class CartActivity extends AppCompatActivity {
 
         NumberFormat fmt = NumberFormat.getInstance(new Locale("vi", "VN"));
         String total = fmt.format(CartManager.getInstance().getTotalPrice());
+        BottomSheetDialog bottomSheet = new BottomSheetDialog(this);
+        View sheetView = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_payment_method, null);
+        bottomSheet.setContentView(sheetView);
 
-        new AlertDialog.Builder(this)
-                .setTitle("Xác nhận thanh toán")
-                .setMessage("Tổng tiền: " + total + " đ\n\nBạn có chắc muốn thanh toán?")
-                .setPositiveButton("Thanh toán", (dialog, which) -> handlePayment())
-                .setNegativeButton("Hủy", null)
-                .show();
-    }
+        TextView tvTotal = sheetView.findViewById(R.id.tvPaymentTotal);
+        RadioButton rbMoMo = sheetView.findViewById(R.id.rbMoMo);
+        RadioButton rbQR = sheetView.findViewById(R.id.rbQR);
+        View layoutMoMo = sheetView.findViewById(R.id.layoutMoMo);
+        View layoutQR = sheetView.findViewById(R.id.layoutQR);
+        Button btnContinue = sheetView.findViewById(R.id.btnContinuePayment);
+        Button btnCancel = sheetView.findViewById(R.id.btnCancel);
 
-    private void handlePayment() {
-        List<CartManager.CartItem> items = CartManager.getInstance().getCartItems();
-        if (items.isEmpty()) {
-            Toast.makeText(this, "Giỏ hàng trống", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        tvTotal.setText("Tổng tiền: " + total + " đ");
 
-        btnCheckout.setEnabled(false);
-        Toast.makeText(this, "Đang kết nối cổng thanh toán online...", Toast.LENGTH_SHORT).show();
+        final int[] selectedMethod = {-1};
+        layoutMoMo.setOnClickListener(v -> {
+            selectedMethod[0] = 0;
+            rbMoMo.setChecked(true);
+            rbQR.setChecked(false);
+        });
 
-        double totalPrice = CartManager.getInstance().getTotalPrice();
-        onlinePaymentService.processPayment(totalPrice, new OnlinePaymentService.PaymentCallback() {
-            @Override
-            public void onSuccess() {
-                btnCheckout.setEnabled(true);
-                placeOrderAfterPaymentSuccess();
-            }
+        layoutQR.setOnClickListener(v -> {
+            selectedMethod[0] = 1;
+            rbMoMo.setChecked(false);
+            rbQR.setChecked(true);
+        });
 
-            @Override
-            public void onFailure(String message) {
-                btnCheckout.setEnabled(true);
-                Toast.makeText(CartActivity.this, message, Toast.LENGTH_LONG).show();
+        btnContinue.setOnClickListener(v -> {
+            if (selectedMethod[0] == 0) {
+                bottomSheet.dismiss();
+                openPaymentConfirm(PaymentConfirmActivity.MODE_MOMO);
+            } else if (selectedMethod[0] == 1) {
+                bottomSheet.dismiss();
+                openPaymentConfirm(PaymentConfirmActivity.MODE_QR);
+            } else {
+                Toast.makeText(this, "Vui lòng chọn phương thức thanh toán", Toast.LENGTH_SHORT).show();
             }
         });
+
+        btnCancel.setOnClickListener(v -> bottomSheet.dismiss());
+
+        bottomSheet.show();
+    }
+
+    private void openPaymentConfirm(int mode) {
+        double totalPrice = CartManager.getInstance().getTotalPrice();
+        Intent intent = new Intent(this, PaymentConfirmActivity.class);
+        intent.putExtra(PaymentConfirmActivity.EXTRA_MODE, mode);
+        intent.putExtra(PaymentConfirmActivity.EXTRA_AMOUNT, totalPrice);
+        paymentLauncher.launch(intent);
     }
 
     private void placeOrderAfterPaymentSuccess() {

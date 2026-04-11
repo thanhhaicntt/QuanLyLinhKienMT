@@ -27,6 +27,7 @@
         <activity android:name=".activity.user.ProductDetailActivity"/>
         <activity android:name=".activity.user.SearchActivity"/>
         <activity android:name=".activity.user.CartActivity"/>
+        <activity android:name=".activity.user.PaymentConfirmActivity"/>
         <activity android:name=".activity.user.OrderHistoryActivity"/>
 
         <!-- Activity Admin-->

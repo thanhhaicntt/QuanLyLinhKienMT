@@ -43,4 +43,12 @@
     <string name="find1">Tìm theo username hoặc email...</string>
     <string name="ten_dm">Tên danh mục</string>
     <string name="mo_ta">Mô tả (không bắt buộc)</string>
+    <string name="payment_qr_desc">Mã QR chuyển khoản demo</string>
+    <string name="payment_momo_button">Thanh toán qua MoMo (demo online)</string>
+    <string name="payment_qr_done">Đã thanh toán xong</string>
+    <string name="payment_received_message">Đã nhận thông tin thanh toán. Đơn hàng sẽ được xử lý sau khi xác nhận.</string>
+    <string name="payment_finalize_order">Hoàn tất đơn hàng</string>
+    <string name="payment_choose_method">Chọn phương thức thanh toán</string>
+    <string name="payment_method_momo">Thanh toán bằng MoMo</string>
+    <string name="payment_method_qr">Thanh toán chuyển khoản (QR)</string>
 </resources>
