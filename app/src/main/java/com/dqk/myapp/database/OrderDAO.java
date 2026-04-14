@@ -85,6 +85,22 @@ public class OrderDAO {
         return ds;
     }
 
+    /**
+     * Kiểm tra xem người dùng đã từng mua sản phẩm này hay chưa
+     * Thường là kiểm tra trong các đơn hàng đã được giao (delivered)
+     */
+    public boolean hasPurchasedProduct(int userId, int productId) {
+        SQLiteDatabase db = dbHelper.openDatabase();
+        String query = "SELECT 1 FROM orders o " +
+                "JOIN order_items oi ON o.id = oi.order_id " +
+                "WHERE o.user_id = ? AND oi.product_id = ? AND o.status = 'delivered' LIMIT 1";
+        Cursor c = db.rawQuery(query, new String[]{String.valueOf(userId), String.valueOf(productId)});
+        boolean hasPurchased = c.getCount() > 0;
+        c.close();
+        db.close();
+        return hasPurchased;
+    }
+
     //Lấy tất cả các đơn hàng(Admin) -join với users để có username
     public List<Order> getAllOrders() {
         SQLiteDatabase DB = dbHelper.openDatabase();
